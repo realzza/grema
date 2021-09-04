@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument('--day', type=int, required=True)
     parser.add_argument('--preview', type=int, default=10)
     parser.add_argument('--count', type=int, default=300)
-    parser.add_argument('--reset', type=bool, default=False)
+    parser.add_argument('--reset', action="store_true")
     parser.add_argument('--update', type=bool, default=True)
     parser.add_argument('--log', type=str, default='../2.新GRE官方词汇/分list Excel版 （每天300）/notes/')
     return parser.parse_args()
