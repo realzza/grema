@@ -1,0 +1,1 @@
+from .WordReader import *
