@@ -5,3 +5,4 @@ OG/notes/
 .ipynb_checkpoints/
 OG/__pycache__/__init__.cpython-35.pyc
 OG/__pycache__/WordReader.cpython-35.pyc
+OG/memo.py
