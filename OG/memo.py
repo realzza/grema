@@ -44,17 +44,14 @@ words_container.memorize(words_count)
 update = args.update
 if update:
     notes_dir = args.log
-    if not os.path.isdir(notes_dir):
-        os.mkdir(notes_dir)
+    os.makedirs(notes_dir, exist_ok=True)
     words_container.update_excel()
     all_words = pd.read_excel(wordlist_name)
     time_str = strftime("%Y-%m-%d %H%M%S-", localtime())
-    if not os.path.isdir(notes_dir+time_str.split()[0]):
-        os.mkdir(notes_dir+time_str.split()[0])
+    os.makedirs(notes_dir+time_str.split()[0], exist_ok=True-)
     html_name = time_str.split()[1]+'Day%d.html'%day
     html_script = all_words.to_html().replace('<thead>','<meta http-equiv="content-Type" content="text/html; charset=UTF-8" /><thead>')
     with open(notes_dir+time_str.split()[0]+'/'+html_name,'w',encoding="UTF-8") as f:
         f.write(html_script.replace('\\n',''))
-#     all_words.to_html(notes_dir+html_name,encoding="utf-8")
     print('... Updated! ...')
 print('... Done & Congrats ...')
