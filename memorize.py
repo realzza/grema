@@ -8,9 +8,9 @@ from time import localtime, strftime
 def parse_args():
   desc = "parse args for memorizing gre words"
   parser = argparse.ArgumentParser(description=desc)
-  parser.add_argument("--day", type=int, required=True, metavar="DAY", help="select from 1 to 12")
+  parser.add_argument("--day", type=int, required=True, help="select from 1 to 12")
   parser.add_argument('--preview', type=int, default=10, help="peek words from list [default: 10]")
-  # parser.add_argument('--standard', type=str, default="300", help="choose standard 300/500 words per day [default: 300]")
+  parser.add_argument('--word-base', type=str, default="og", help="choose wordbase og/ynm [default: og]")
   # parser.add_argument('--count', type=int, default=300, help="number of words to memorize from current list")
   parser.add_argument('--reset', action='store_true', default=False, help="reset learning history with CAUTION [default: False]")
   parser.add_argument('--update', action='store_true', default=True, help="Want the learning history to be updated or not? [default: True]")
@@ -20,6 +20,12 @@ def parse_args():
 def regularizeDirectory(someDir):
   return someDir.rstrip("/")+'/'
 
+def selectBase(base):
+  if base == "og":
+    return "OG/", 12
+  else:
+    return "ynm/", 10
+
 if __name__ == "__main__":
 
   # parse args
@@ -27,16 +33,23 @@ if __name__ == "__main__":
 
   # check day in range
   thisDay = args.day 
-  assert thisDay < 12, "choose between day 1 and day 12"
+
+  # load og/ynm 
+  plan, planScope = selectBase(args.word_base)
+  assert thisDay < planScope, "choose between day 1 and day %d"%planScope
   
   # load wordlist
-  if thisDay < 12:
-    wordListName = "OG/" + "Day %d list%d-%d.xlsx"%(thisDay,3*thisDay-2,3*thisDay)
-  elif thisDay == 12:
-    wordListName = "OG/" + "Day 12 list34-35.xlsx"
+  if args.word_base == "og":
+    if thisDay < 12:
+      wordListName = plan + "Day %d list%d-%d.xlsx"%(thisDay,3*thisDay-2,3*thisDay)
+    elif thisDay == 12:
+      wordListName = "OG/" + "Day 12 list34-35.xlsx"
+  elif args.word_base == "ynm":
+    wordListName = plan + "ynm_day%d.xlsx"%(thisDay)
 
   # check if preview/peek required
   preview = args.preview
+  # print(wordListName)
   allWords = pd.read_excel(wordListName)
   print("... Wordlist %d loaded ..."%thisDay)
   print(allWords.head(preview))
