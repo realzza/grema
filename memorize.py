@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
   # load og/ynm 
   plan, planScope = selectBase(args.word_base)
-  assert thisDay < planScope, "choose between day 1 and day %d"%planScope
+  assert 0< thisDay <= planScope, "choose between day 1 and day %d"%planScope
   
   # load wordlist
   if args.word_base == "og":
