@@ -17,3 +17,5 @@ images/GM.svg
 images/grema_logo.png
 images/grema_media.png
 images/grema_media_purple.png
+utils/__pycache__/
+ynm/memo.py
